@@ -6,21 +6,57 @@ def contains(text, pattern):
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement contains here (iteratively and/or recursively)
 
+    if find_index(text, pattern) != None:
+        return True
+    return False
 
-def find_index(text, pattern):
+
+def find_index(text, pattern, t_index=0, p_index=0):
     """Return the starting index of the first occurrence of pattern in text,
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_index here (iteratively and/or recursively)
 
+    if pattern == '':
+        return 0
+    if (p_index == len(pattern)):
+        return t_index - len(pattern)
+    if (t_index == len(text)):
+        return None
+    if text[t_index] == pattern[p_index]:
+        return find_index(text, pattern, t_index + 1, p_index + 1)
+    if p_index == 0:
+        return find_index(text, pattern, t_index + 1, 0)
+    else:
+        return find_index(text, pattern, t_index - p_index + 1, 0)
 
-def find_all_indexes(text, pattern):
+
+def find_all_indexes(text, pattern, t_index=0, p_index=0, indexes=None):
     """Return a list of starting indexes of all occurrences of pattern in text,
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+
+    if indexes is None:
+        indexes= []
+    if pattern == '':
+        if t_index >= len(text):
+            return indexes
+        indexes.append(t_index - len(pattern))
+        return find_all_indexes(text, pattern, t_index + 1, 0, indexes)
+    if p_index >= len(pattern):
+        indexes.append(t_index - len(pattern))
+        return find_all_indexes(text, pattern, t_index - len(pattern) + 1, 0, indexes)
+    if t_index >= len(text):
+        return indexes
+    if text[t_index] == pattern[p_index]:
+        return find_all_indexes(text, pattern, t_index + 1, p_index + 1, indexes)
+    if p_index == 0:
+        return find_all_indexes(text, pattern, t_index + 1, 0, indexes)
+    else:
+        return find_all_indexes(text, pattern, t_index, 0, indexes)
 
 
 def test_string_algorithms(text, pattern):

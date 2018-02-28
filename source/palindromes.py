@@ -18,18 +18,50 @@ def is_palindrome(text):
 
 
 def is_palindrome_iterative(text):
-    # TODO: implement the is_palindrome function iteratively here
-    pass
-    # once implemented, change is_palindrome to call is_palindrome_iterative
-    # to verify that your iterative implementation passes all tests
+    text = clean_text(text)
+    left = 0
+    right = len(text) - 1
+
+    while left < right:
+        if text[left] != text[right]:
+            return False
+        left += 1
+        right -= 1
+
+    return True
 
 
 def is_palindrome_recursive(text, left=None, right=None):
-    # TODO: implement the is_palindrome function recursively here
-    pass
-    # once implemented, change is_palindrome to call is_palindrome_recursive
-    # to verify that your iterative implementation passes all tests
+    text = clean_text(text)
 
+    if left == None and right == None:
+        left = 0
+        right = len(text) - 1
+
+    if right < left:
+        return True
+    elif text[left] != text[right]:
+        return False
+    else:
+        return is_palindrome_recursive(text, left + 1, right - 1)
+
+def is_palindrome_3rd(text):
+    text = clean_text(text)
+    half_length = int(len(text)/2)
+
+    if len(text) % 2 == 0:
+        if text[:half_length] == text[half_length:][::-1]:
+            return True
+        return False
+    else:
+        if text[:half_length+1] == text[half_length:][::-1]:
+            return True
+        return False
+
+def clean_text(text):
+    text = text.replace(' ', '').replace('!', '').replace('-','').replace('.','').replace(',', '').replace('?', '').replace("'", '')
+    text = text.lower()
+    return text
 
 def main():
     import sys
