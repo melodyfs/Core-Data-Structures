@@ -74,8 +74,8 @@ class LinkedList(object):
     def get_at_index(self, index):
         """Return the item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) under what conditions? [TODO]
+        Worst case running time: o(n) under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index < self.size):
             raise ValueError('List index out of range: {}'.format(index))
@@ -93,8 +93,8 @@ class LinkedList(object):
     def insert_at_index(self, index, item):
         """Insert the given item at the given index in this linked list, or
         raise ValueError if the given index is out of range of the list size.
-        Best case running time: ??? under what conditions? [TODO]
-        Worst case running time: ??? under what conditions? [TODO]"""
+        Best case running time: O(1) under what conditions? [TODO]
+        Worst case running time: O(n) under what conditions? [TODO]"""
         # Check if the given index is out of range and if so raise an error
         if not (0 <= index <= self.size):
             raise ValueError('List index out of range: {}'.format(index))
@@ -113,6 +113,7 @@ class LinkedList(object):
         elif index == 0:
             new_node.next = self.head
             self.head = new_node
+            # self.prepend(item)
         # inserting node as the tail node
         elif index == self.size - 1:
             self.tail.next = new_node
@@ -134,7 +135,7 @@ class LinkedList(object):
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) under what conditions? [TODO]"""
         # Create a new node to hold the given item
         new_node = Node(item)
         self.size += 1
@@ -150,7 +151,7 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) under what conditions? [TODO]"""
         # Create a new node to hold the given item
         new_node = Node(item)
         self.size += 1
@@ -262,27 +263,27 @@ def test_linked_list():
     print(ll)
     ll.insert_at_index(1, 'M')
     print(ll)
-    # print('head: {}'.format(ll.head))
-    # print('tail: {}'.format(ll.tail))
-    # print('size: {}'.format(ll.size))
-    # print('length: {}'.format(ll.length()))
-    #
-    # print('Getting items by index:')
-    # for index in range(ll.size):
-    #     item = ll.get_at_index(index)
-    #     print('get_at_index({}): {!r}'.format(index, item))
-    #
-    # print('Deleting items:')
-    # ll.delete('B')
-    # print(ll)
-    # ll.delete('C')
-    # print(ll)
-    # ll.delete('A')
-    # print(ll)
-    # print('head: {}'.format(ll.head))
-    # print('tail: {}'.format(ll.tail))
-    # print('size: {}'.format(ll.size))
-    # print('length: {}'.format(ll.length()))
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('size: {}'.format(ll.size))
+    print('length: {}'.format(ll.length()))
+
+    print('Getting items by index:')
+    for index in range(ll.size):
+        item = ll.get_at_index(index)
+        print('get_at_index({}): {!r}'.format(index, item))
+
+    print('Deleting items:')
+    ll.delete('B')
+    print(ll)
+    ll.delete('C')
+    print(ll)
+    ll.delete('A')
+    print(ll)
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('size: {}'.format(ll.size))
+    print('length: {}'.format(ll.length()))
 
 
 if __name__ == '__main__':
