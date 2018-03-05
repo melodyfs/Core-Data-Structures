@@ -103,21 +103,18 @@ class LinkedList(object):
 
         new_node = Node(item)
         node_index = 0
-        self.size += 1
 
         # empty list
         if self.head is None:
+            self.size += 1
             self.head = new_node
             self.tail = new_node
         # inserting node as the head node
         elif index == 0:
-            new_node.next = self.head
-            self.head = new_node
-            # self.prepend(item)
+            self.prepend(item)
         # inserting node as the tail node
-        elif index == self.size - 1:
-            self.tail.next = new_node
-            self.tail = new_node
+        elif index == self.size:
+            self.append(item)
 
         # inserting node at the middle
         else:
@@ -125,12 +122,14 @@ class LinkedList(object):
             next_node = current.next
             # finding the node before the given index
             while node_index < index:
-                if index == node_index - 1:
+                if index - 1 == node_index:
+                    self.size += 1
                     current.next = new_node
                     new_node.next = next_node
                     return
                 else:
                     node_index += 1
+
 
 
     def append(self, item):
