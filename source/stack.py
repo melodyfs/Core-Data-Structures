@@ -81,7 +81,7 @@ class ArrayStack(object):
 
     def push(self, item):
         """Insert the given item on the top of this stack.
-        Running time: O(1) – appending an item at the end of list"""
+        Running time: O(1)* - on average – appending an item at the end of list"""
         # TODO: Insert given item
         self.list.append(item)
 

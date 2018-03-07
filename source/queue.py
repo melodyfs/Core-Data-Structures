@@ -104,3 +104,5 @@ class ArrayQueue(object):
 # to use each of your Queue implementations to verify they each pass all tests
 # Queue = LinkedQueue
 Queue = ArrayQueue
+# a = ['A', 'B', 'C']
+# print(a[:1])
