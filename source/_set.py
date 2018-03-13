@@ -11,11 +11,13 @@ class Set(object):
                 self.add(element)
 
     def contains(self, element):
-        '''Return True indicating the element is in this set. False otherwise'''
+        '''Return True indicating the element is in this set. False otherwise
+        Running time: Best - O(1), worse - O(n)'''
         return element in self.list
 
     def add(self, element):
-        '''Add element to this set, if not present already'''
+        '''Add element to this set, if not present already
+        Running time: Best - O(1), worse - O(n)'''
         if self.contains(element):
             raise ValueError("Element exists")
         else:
@@ -23,7 +25,8 @@ class Set(object):
             self.size += 1
 
     def remove(self, element):
-        '''Remove element from this set, if present, or else raise ValueError'''
+        '''Remove element from this set, if present, or else raise ValueError
+        Running time: Best - O(1), worse - O(n)'''
         if self.contains(element):
             self.list.remove(element)
             self.size -= 1
@@ -31,7 +34,8 @@ class Set(object):
             raise ValueError("Element not found")
 
     def union(self, other_set):
-        '''Return a new set that is the union of this set and other_set'''
+        '''Return a new set that is the union of this set and other_set
+        Running time: O(m*n)'''
         # A new set initialized with current set
         new_set = Set(self.list)
 
@@ -42,7 +46,8 @@ class Set(object):
         return new_set
 
     def intersection(self, other_set):
-        '''Return a new set that is the intersection of this set and other_set'''
+        '''Return a new set that is the intersection of this set and other_set
+        Running time: O(m*n)'''
         new_set = Set()
 
         for element in other_set.list:
@@ -52,7 +57,8 @@ class Set(object):
 
 
     def difference(self, other_set):
-        '''Return a new set that is the difference of this set and other_set'''
+        '''Return a new set that is the difference of this set and other_set
+        Running time: O(m*n)'''
         # A new set initialized with current set
         new_set = Set(self.list)
 
@@ -65,7 +71,8 @@ class Set(object):
 
 
     def is_subset(self, other_set):
-        '''Return a boolean indicating whether other_set is a subset of this set'''
+        '''Return a boolean indicating whether other_set is a subset of this set
+        Running time: O(m*n)'''
         for element in other_set.list:
             if self.contains(element):
                 return True

@@ -21,10 +21,10 @@ def find_index(text, pattern, t_index=0, p_index=0):
     if pattern == '':
         return 0
     # all characters in pattern are found, return the index a match first occurs
-    if (p_index == len(pattern)):
+    if p_index == len(pattern):
         return t_index - len(pattern)
     # reaches the end of text without matching any character
-    if (t_index == len(text)):
+    if t_index == len(text):
         return None
     # one character is matched, try matching the next character
     if text[t_index] == pattern[p_index]:
