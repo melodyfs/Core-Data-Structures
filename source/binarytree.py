@@ -81,6 +81,7 @@ class BinarySearchTree(object):
     def search(self, item):
         """Return an item in this binary search tree matching the given item,
         or None if the given item is not found.
+        O(h) ~= log base2
         TODO: Best case running time: ??? under what conditions?
         TODO: Worst case running time: ??? under what conditions?"""
         # Find a node with the given item, if any
@@ -303,8 +304,8 @@ class BinarySearchTree(object):
     def _traverse_in_order_recursive(self, node, visit):
         """Traverse this binary tree with recursive in-order traversal (DFS).
         Start at the given node and visit each node with the given function.
-        TODO: Running time: ??? Why and under what conditions?
-        TODO: Memory usage: ??? Why and under what conditions?"""
+        TODO: Running time: O(n) Why and under what conditions?
+        TODO: Memory usage: O(h) ~= log base2 of n Why and under what conditions?"""
         # Traverse left subtree, if it exists
         if node.left:
             self._traverse_in_order_recursive(node.left, visit)
@@ -393,11 +394,11 @@ class BinarySearchTree(object):
     def _traverse_level_order_iterative(self, start_node, visit):
         """Traverse this binary tree with iterative level-order traversal (BFS).
         Start at the given node and visit each node with the given function.
-        TODO: Running time: ??? Why and under what conditions?
-        TODO: Memory usage: ??? Why and under what conditions?"""
+        TODO: Running time: O(n) Why and under what conditions?
+        TODO: Memory usage: O(n/2) Why and under what conditions?"""
         # Create queue to store nodes not yet traversed in level-order
-        from queue import ArrayQueue
-        queue = ArrayQueue()
+        from queue import LinkedQueue
+        queue = LinkedQueue()
         # Enqueue given starting node
         queue.enqueue(start_node)
         # Loop until queue is empty
