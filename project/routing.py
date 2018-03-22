@@ -1,4 +1,5 @@
 import time
+from binarytree import BinarySearchTree
 
 class Routing:
 
@@ -9,7 +10,7 @@ class Routing:
             self.phone_nums = self.read_number_file(number_file)
 
     def read_cost_file(self, file_name):
-        opened_file = open('datafiles/{}'.format(file_name))
+        opened_file = open('data/{}'.format(file_name))
         file_lines = opened_file.read().splitlines()
         pricing = {}
 
@@ -19,15 +20,17 @@ class Routing:
         return pricing
 
     def read_number_file(self, file_name):
-        opened_file = open('datafiles/{}'.format(file_name))
+        opened_file = open('data/{}'.format(file_name))
         file_lines = opened_file.read().splitlines()
         return file_lines
 
     def find_all_matches(self, number):
         matches = {}
 
-        for prefix in self.pricing:  # ?? iterations
-            if number.startswith(prefix):  # O(??) running time
+        # n - # of prefixes
+        # m - # of numbers to look up
+        for prefix in self.pricing:  # n iterations
+            if number.startswith(prefix):  # O(n*m) running time
                 matches[prefix] = self.pricing[prefix]
         return matches
 
@@ -48,14 +51,61 @@ class Routing:
                 match = self.find_best_match(num)
                 self.record_result(num, match, N)
 
+class PricingNode:
 
+    def __init__(self, prefix, cost):
+        self.prefix = prefix
+        self.cost = cost
+
+    def __gt__(self, other):
+
+    def __lt__(self, other):
+
+    def __eq__(self, other):
+
+
+
+class MultiRouting:
+
+    def __init__(self, cost_file, number_file=None):
+        self.pricing = self.read_cost_file(cost_file)
+        self.phone_nums = {}
+        if number_file is not None:
+            self.phone_nums = self.read_number_file(number_file)
+
+    def read_cost_file(self, file_name):
+        opened_file = open('data/{}'.format(file_name))
+        file_lines = opened_file.read().splitlines()
+        binary_search_tree = BinarySearchTree()
+
+        for line in file_lines:
+            prefix, cost = line.split(',')
+            item = (prefix, cost)
+            binary_search_tree.insert(item)
+        print(binary_search_tree)
+        return binary_search_tree
+
+    def read_number_file(self, file_name):
+        opened_file = open('data/{}'.format(file_name))
+        file_lines = opened_file.read().splitlines()
+        return file_lines
+
+    def find_all_matches(self, number):
+        node = self.pricing.search(number)
+        print(node)
 
 def main():
-    number = '+19446855669'
-    routing = Routing('route-costs-10000000.txt', 'phone-numbers-10000.txt')
+    # number = '+19446855669'
+    number = ('+34924199', 0.39)
+    # routing = Routing('route-costs-10000000.txt', 'phone-numbers-10000.txt')
     # routing = Routing('route-costs-106000.txt')
+
+
     start_time = time.time()
-    routing.find_multi_numbers(3)
+    multi_routing = MutiRouting('route-costs-10.txt')
+    multi_routing.find_all_matches(number)
+    # print(muti_routing.root)
+    # routing.find_multi_numbers(3)s
     # match = routing.find_best_match(number)
     # print('match: ' + str(match))
     end_time = time.time()
