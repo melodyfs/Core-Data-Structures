@@ -111,18 +111,15 @@ def merge_sort(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Check if list is so small it's already sorted (base case)
-    if len(items) <= 1:
-        return items
-    # Split items list into approximately equal halves
-    items1 = items[:int(len(items)/2)]
-    items2 = items[int(len(items)/2):]
-    # Sort each half by recursively calling merge sort
-    merge_sort(items1)
-    merge_sort(items2)
-    items[:] = merge(items1, items2)
-    # Merge sorted halves into one list in sorted order
-    # items.extend(merge(sorted1, sorted2))
-    # return items
+    if len(items) > 1:
+        # Split items list into approximately equal halves
+        items1 = items[:int(len(items)/2)]
+        items2 = items[int(len(items)/2):]
+        # Sort each half by recursively calling merge sort
+        merge_sort(items1)
+        merge_sort(items2)
+        # Merge sorted halves into one list in sorted order
+        items[:] = merge(items1, items2)
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
