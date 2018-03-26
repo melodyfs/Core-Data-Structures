@@ -6,7 +6,7 @@ import unittest
 
 
 # Change this variable to the sort function you want to test
-sort = bubble_sort
+sort = merge_sort
 
 
 class IsSortedTest(unittest.TestCase):

@@ -3,9 +3,13 @@
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check that all adjacent items are in order, return early if not
+    TODO: Running time: O(n) Why and under what conditions?
+    TODO: Memory usage: O(1) Why and under what conditions?"""
+    # Check that all adjacent items are in order, return early if not
+    for i in range(len(items) - 1):
+        if items[i] > items[i + 1]:
+            return False
+    return True
 
 
 def bubble_sort(items):
@@ -13,8 +17,12 @@ def bubble_sort(items):
     repeating until all items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
+    # Repeat until all items are in sorted order
+    while not is_sorted(items):
+    # Swap adjacent items that are out of order
+        for i in range(len(items) - 1):
+            if items[i] > items[i + 1]:
+                items[i], items[i + 1] = items[i + 1], items[i]
 
 
 def selection_sort(items):
@@ -22,9 +30,19 @@ def selection_sort(items):
     unsorted item, and repeating until all items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
+    # Repeat until all items are in sorted order
+    for i in range(len(items) - 1):
+        # Find minimum item in unsorted items
+        min_item = items[i]
+        min_index = i
+
+        for j in range(i + 1, len(items)):
+            current_item = items[j]
+            if min_item > current_item:
+                min_item = current_item
+                min_index = j
+        # Swap it with first unsorted item
+        items[i], items[min_index] = items[min_index], items[i]
 
 
 def insertion_sort(items):
@@ -32,9 +50,18 @@ def insertion_sort(items):
     order in front of items, and repeating until all items are in order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
+    # Repeat until all items are in sorted order
+
+    for i in range(1, len(items)):
+        # Take first unsorted item
+        inserting_item = items[i]
+        inserting_index = i
+        # loop through sorted items
+        for j in range(i):
+            if inserting_item < items[(i-1) - j]:
+                # Insert it in sorted order in front of items
+                items[inserting_index], items[(i-1) - j] = items[(i-1) - j], items[inserting_index]
+                inserting_index = (i-1) - j
 
 
 def merge(items1, items2):
@@ -42,9 +69,24 @@ def merge(items1, items2):
     and return a new list containing all items in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
+    merged_list = []
+    index1 = 0
+    index2 = 0
+    #  Repeat until one list is empty
+    while len(items1) > index1 and len(items2) > index2:
+    # Find minimum item in both lists and append it to new list
+        if items1[index1] < items2[index2]:
+            merged_list.append(items1[index1])
+            index1 += 1
+        else:
+            merged_list.append(items2[index2])
+            index2 += 1
+    # Append remaining items in non-empty list to new list
+    if index1 != len(items1):
+        merged_list.extend(items1[index1:len(items1)])
+    else:
+        merged_list.extend(items2[index2:len(items2)])
+    return merged_list
 
 
 def split_sort_merge(items):
@@ -53,21 +95,34 @@ def split_sort_merge(items):
     a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half using any other sorting algorithm
-    # TODO: Merge sorted halves into one list in sorted order
-
+    # Split items list into approximately equal halves
+    items1 = items[:int(len(items)/2)]
+    items2 = items[int(len(items)/2):]
+    # Sort each half using any other sorting algorithm
+    items1 = insertion_sort(items1)
+    items2 = insertion_sort(items2)
+    # Merge sorted halves into one list in sorted order
+    merge(items1, items2)
+    # return merged_list
 
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
-
+    # Check if list is so small it's already sorted (base case)
+    if len(items) <= 1:
+        return items
+    # Split items list into approximately equal halves
+    items1 = items[:int(len(items)/2)]
+    items2 = items[int(len(items)/2):]
+    # Sort each half by recursively calling merge sort
+    merge_sort(items1)
+    merge_sort(items2)
+    items[:] = merge(items1, items2)
+    # Merge sorted halves into one list in sorted order
+    # items.extend(merge(sorted1, sorted2))
+    # return items
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
