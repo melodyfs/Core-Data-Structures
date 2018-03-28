@@ -3,8 +3,8 @@
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
-    TODO: Running time: O(n) Why and under what conditions?
-    TODO: Memory usage: O(1) Why and under what conditions?"""
+    Running time: O(n) Why and under what conditions?
+    Memory usage: O(1) Why and under what conditions?"""
     # Check that all adjacent items are in order, return early if not
     for i in range(len(items) - 1):
         if items[i] > items[i + 1]:
@@ -15,7 +15,7 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
+    TODO: Running time: O(n*n) Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Repeat until all items are in sorted order
     while not is_sorted(items):
@@ -28,7 +28,7 @@ def bubble_sort(items):
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
+    Running time: O(n*l) Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Repeat until all items are in sorted order
     for i in range(len(items) - 1):
@@ -111,29 +111,40 @@ def merge_sort(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Check if list is so small it's already sorted (base case)
-    if len(items) > 1:
-        # Split items list into approximately equal halves
-        items1 = items[:int(len(items)/2)]
-        items2 = items[int(len(items)/2):]
-        # Sort each half by recursively calling merge sort
-        merge_sort(items1)
-        merge_sort(items2)
-        # Merge sorted halves into one list in sorted order
-        items[:] = merge(items1, items2)
+    if len(items) <= 1:
+        return
+    # Split items list into approximately equal halves
+    items1 = items[:int(len(items)/2)]
+    items2 = items[int(len(items)/2):]
+    # Sort each half by recursively calling merge sort
+    merge_sort(items1)
+    merge_sort(items2)
+    # Merge sorted halves into one list in sorted order
+    items[:] = merge(items1, items2)
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
     `[low...high]` by choosing a pivot (TODO: document your method here) from
-    that range, moving pivot into index `p`, items less than pivot into range
+    that range, moving pivot into index `np`, items less than pivot into range
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Choose a pivot any way and document your method in docstring above
+    p_index = low
+    p_value = items[p_index]
+    next_p = p_index + 1
     # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
-
+    for index in range(low+1, high + 1):
+        # Move items less than pivot into front of range [low...p-1]
+        if items[index] < p_value:
+            # items[index], items[p_index] = items[p_index], items[index]
+            items[next_p], items[index] = items[index], items[next_p]
+            next_p += 1
+            # print(items)
+        # Move items greater than pivot into back of range [p+1...high]
+    items[p_index], items[next_p - 1] = items[next_p - 1], items[p_index]
+    # Move pivot item into final position [p] and return index p
+    return next_p - 1
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
@@ -141,11 +152,28 @@ def quick_sort(items, low=None, high=None):
     TODO: Best case running time: ??? Why and under what conditions?
     TODO: Worst case running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
 
+    # Check if list or range is so small it's already sorted (base case)
+
+    # Check if high and low range bounds have default values (not given)
+    if low is None and high is None :
+        low = 0
+        high = len(items) - 1
+    # if high is None:
+    #     low = 0
+        # return
+    if high <= low:
+        print("yes")
+        return
+    pivot = partition(items, low, high)
+    # Sort each sublist range by recursively calling quick sort
+    # new_low =
+    # if new_low > low:
+    quick_sort(items, low, pivot - 1)
+
+    # new_high = pivot + 1
+    # if new_high < high:
+    quick_sort(items, pivot + 1, high)
 
 def counting_sort(numbers):
     """Sort given numbers (integers) by counting occurrences of each number,
